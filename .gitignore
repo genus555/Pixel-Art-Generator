@@ -1,1 +1,4 @@
 .venv
+/pictures/
+/output/
+src/__pycache__
