@@ -5,3 +5,7 @@ Just create a virtual environment and run the requirements.txt (pip install -r r
 Keyboard Commands:
 'esc': Close display window
 's': Save image into output folder
+'.': Increase pixel count by 50
+',': Decrease pixel count by 50
+'>': Increase pixel count by 100
+'<': Decrease pixel count by 100
