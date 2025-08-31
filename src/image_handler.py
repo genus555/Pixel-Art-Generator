@@ -3,19 +3,23 @@ import tkinter as tk
 from tkinter import ttk
 import os
 from pixelate import pixelate
+from image import ImageObj
 
-def check_image(root, image, x, y):
+def check_image(root, image):
     valid = True
     try:
-        if (x or y) <= 0:
+        if (image.x or image.y) <= 0:
             valid = False
             raise Exception("Image is too small")
-        elif (x or y) >= (image.size[0] or image.size[1]):
+        elif (image.x or image.y) >= (image.image.size[0] or image.image.size[1]):
             valid = False
             raise Exception("Image is too big")
     finally:
         if not valid:
             root.destroy()
+
+def open_window(image, image_name, image_x, image_y):
+    pass
 
 def open_image(image_path, cwd, image_name):
     root = tk.Tk()
@@ -24,13 +28,13 @@ def open_image(image_path, cwd, image_name):
     try:
         pil_image = Image.open(image_path)
         print(f"Original image size: {pil_image.size}")
-        
-        image_x = 100
-        image_y = 100
-        check_image(root, pil_image, image_x, image_y)
-        pixel_pil_image = pixelate(pil_image, image_x, image_y)
 
-        tk_image = ImageTk.PhotoImage(pixel_pil_image)
+        image = ImageObj(pil_image, image_name, 100, 100)
+
+        check_image(root, image)
+        image.pixel_image = pixelate(image)
+
+        tk_image = ImageTk.PhotoImage(image.pixel_image)
 
         #Create label widget and paint (pack) onto the root
         image_label = ttk.Label(root, image=tk_image)
@@ -47,7 +51,7 @@ def open_image(image_path, cwd, image_name):
                 print("Saving image to output folder")
                 if not os.path.exists(f"{cwd}/output"):
                     os.mkdir(f"{cwd}/output")
-                pixel_pil_image.save(f"{cwd}/output/pixelated_{image_name}")
+                image.pixel_image.save(f"{cwd}/output/{image.x}x{image.y}_{image_name}")
 
         root.bind('<Key>', on_key_press)
     except Exception as e:
