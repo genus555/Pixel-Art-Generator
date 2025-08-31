@@ -9,3 +9,4 @@ Keyboard Commands:
 ',': Decrease pixel count by 50
 '>': Increase pixel count by 100
 '<': Decrease pixel count by 100
+'c': Increase/Decrease pixel count by inputted amount
