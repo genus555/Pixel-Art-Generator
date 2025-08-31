@@ -72,6 +72,20 @@ def new_root(image, cwd):
                 check_image(root, image)
                 image.pixel_image = pixelate(image)
                 update_image()
+            elif event.keysym == 'c':
+                while True:
+                    i = input("How many pixels do you want to add/subtract?\n")
+                    try:
+                        change = int(i)
+                        break
+                    except ValueError:
+                        print("Not a valid input")
+                
+                image.x += change
+                image.y += change
+                check_image(root, image)
+                image.pixel_image = pixelate(image)
+                update_image()
 
         update_image()
         root.bind('<Key>', on_key_press)
